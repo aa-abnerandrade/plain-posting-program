@@ -16,6 +16,10 @@ public class UserService {
   private UserRepository userRepository;
 
 
+  public User fromDTO(User user) {
+    return new User(user.getId(), user.getName(), user.getEmail());
+  }
+
   public List<User> findAll() {
     return userRepository.findAll();
   }
@@ -26,6 +30,10 @@ public class UserService {
       throw new ObjectNotFoundException("User not found with id: " + id);
     }
     return responseUser.get();
+  }
+
+  public User insert(User user) {
+    return userRepository.insert(user);
   }
 
 }

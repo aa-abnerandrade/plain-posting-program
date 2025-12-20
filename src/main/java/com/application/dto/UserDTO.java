@@ -21,4 +21,8 @@ public class UserDTO {
     this.email = user.getEmail();
   }
 
+  public User toEntity(UserDTO userDTO) {
+    return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
+  }
+
 }

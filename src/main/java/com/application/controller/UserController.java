@@ -19,21 +19,21 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @GetMapping("/all-users")
+  @GetMapping("/find-all-users")
   public ResponseEntity<List<UserDTO>> findAllUsers() {
     List<User> response = userService.findAll();
     List<UserDTO> usersDTO = response.stream().map(UserDTO::new).toList();
     return ResponseEntity.ok().body(usersDTO);
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/find-user-{id}")
   public ResponseEntity<UserDTO> findUserById(@PathVariable String id) {
     User response = userService.findById(id);
     UserDTO userDTO = new UserDTO(response);
     return ResponseEntity.ok().body(userDTO);
   }
 
-  @PostMapping("/new")
+  @PostMapping("/create-user")
   public ResponseEntity<Void> createUser(@RequestBody UserDTO userDTO) {
     User newUser = userDTO.toEntity(userDTO);
     newUser = userService.insert(newUser);

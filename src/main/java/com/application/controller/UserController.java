@@ -10,7 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -35,9 +34,24 @@ public class UserController {
 
   @PostMapping("/create-user")
   public ResponseEntity<Void> createUser(@RequestBody UserDTO userDTO) {
-    User newUser = userDTO.toEntity(userDTO);
+    User newUser = userDTO.fromDtoToUserEntity(userDTO);
     newUser = userService.insert(newUser);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
     return ResponseEntity.created(uri).build();
+  }
+
+  @DeleteMapping("/delete-user-{id}")
+  public ResponseEntity<Void> deleteUser(@PathVariable String id) {
+    userService.delete(id);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/update-user-{id}")
+  public ResponseEntity<UserDTO> updateUser(@PathVariable String id, @RequestBody UserDTO userDTO) {
+    User paramUser = userDTO.fromDtoToUserEntity(userDTO);
+    paramUser.setId(id);
+    User updatedUser = userService.update(paramUser);
+    UserDTO updatedUserDTO = new UserDTO(updatedUser);
+    return ResponseEntity.ok().body(updatedUserDTO);
   }
 }

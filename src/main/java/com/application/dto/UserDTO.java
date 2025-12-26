@@ -2,9 +2,6 @@ package com.application.dto;
 
 import com.application.domain.User;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-
-import java.util.Optional;
 
 @Data
 public class UserDTO {
@@ -21,7 +18,7 @@ public class UserDTO {
     this.email = user.getEmail();
   }
 
-  public User toEntity(UserDTO userDTO) {
+  public User fromDtoToUserEntity(UserDTO userDTO) {
     return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
   }
 

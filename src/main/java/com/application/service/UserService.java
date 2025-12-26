@@ -16,9 +16,7 @@ public class UserService {
   private UserRepository userRepository;
 
 
-  public User fromDTO(User user) {
-    return new User(user.getId(), user.getName(), user.getEmail());
-  }
+
 
   public List<User> findAll() {
     return userRepository.findAll();
@@ -36,4 +34,24 @@ public class UserService {
     return userRepository.insert(user);
   }
 
+  public void delete(String id) {
+    findById(id);
+    userRepository.deleteById(id);
+  }
+
+  public User update(User newData) {
+    User userData = findById(newData.getId());
+    updateData(userData, newData);
+    return userRepository.save(userData);
+  }
+
+  private void updateData(User userData, User newData) {
+    userData.setName(newData.getName());
+    userData.setEmail(newData.getEmail());
+  }
+
+
+  public User fromDtoToUser(User user) {
+    return new User(user.getId(), user.getName(), user.getEmail());
+  }
 }

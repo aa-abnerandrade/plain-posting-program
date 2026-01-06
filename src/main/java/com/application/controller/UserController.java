@@ -1,5 +1,6 @@
 package com.application.controller;
 
+import com.application.domain.Post;
 import com.application.domain.User;
 import com.application.dto.UserDTO;
 import com.application.service.UserService;
@@ -53,5 +54,12 @@ public class UserController {
     User updatedUser = userService.update(paramUser);
     UserDTO updatedUserDTO = new UserDTO(updatedUser);
     return ResponseEntity.ok().body(updatedUserDTO);
+  }
+
+  @GetMapping("/find-posts-by-user-{id}")
+  public ResponseEntity<List<Post>> findPostsByUserId(@PathVariable String id) {
+    User responseUser = userService.findById(id);
+    List<Post> responsePostsFromUser = responseUser.getPosts();
+    return ResponseEntity.ok().body(responsePostsFromUser);
   }
 }

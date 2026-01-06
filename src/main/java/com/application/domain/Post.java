@@ -1,6 +1,7 @@
 package com.application.domain;
 
 import com.application.dto.AuthorDTO;
+import com.application.dto.CommentDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,9 +33,10 @@ public class Post implements Serializable {
 
   private AuthorDTO author;
 
+  private List<CommentDTO> comments = new ArrayList<>();
+
 
   public Post() {
-
   }
   public Post(String id, String title, String body, Date createdAt, AuthorDTO author) {
     this.id = id;

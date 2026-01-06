@@ -24,7 +24,7 @@ public class UserService {
 
   public User findById(String id) {
     Optional<User> responseUser = userRepository.findById(id);
-    if (responseUser == null) {
+    if (responseUser == null || responseUser.isEmpty()) {
       throw new ObjectNotFoundException("User not found with id: " + id);
     }
     return responseUser.get();

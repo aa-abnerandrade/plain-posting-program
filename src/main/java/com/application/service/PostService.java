@@ -6,6 +6,7 @@ import com.application.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,5 +21,9 @@ public class PostService {
       throw new ObjectNotFoundException("Post not found with id: " + id);
     }
     return responsePost.get();
+  }
+
+  public List<Post> findByTitleContainingIgnoreCase(String text) {
+    return postRepository.findByTitleContainingIgnoreCase(text);
   }
 }

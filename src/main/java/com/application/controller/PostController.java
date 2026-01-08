@@ -24,11 +24,19 @@ public class PostController {
     return ResponseEntity.ok().body(responsePost);
   }
 
-  @GetMapping("/find-post-by-text-title")
-  public ResponseEntity<List<Post>> findPostsByTitleContainingIgnoreCase(
-          @RequestParam(value = "textParam") String textParam) {
-    String textParamDecoded = URL.decodeParam(textParam);
-    List<Post> responsePostsFounded = postService.findByTitleContainingIgnoreCase(textParamDecoded);
+  @GetMapping("/search-post-by-text-title")
+  public ResponseEntity<List<Post>> searchPostsByTitleContainingIgnoreCase(
+          @RequestParam(value = "titleParam") String titleParam) {
+    String titleParamDecoded = URL.decodeParam(titleParam);
+    List<Post> responsePostsFounded = postService.findByTitleContainingIgnoreCase(titleParamDecoded);
+    return ResponseEntity.ok().body(responsePostsFounded);
+  }
+
+  @GetMapping("/search-post-by-text-body")
+  public ResponseEntity<List<Post>> searchPostsByBodyWithQuery(
+          @RequestParam(value = "bodyParam") String bodyParam) {
+    String bodyParamDecoded = URL.decodeParam(bodyParam);
+    List<Post> responsePostsFounded = postService.findByBodyWithQuery(bodyParamDecoded);
     return ResponseEntity.ok().body(responsePostsFounded);
   }
 }

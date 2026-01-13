@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -39,4 +40,18 @@ public class PostController {
     List<Post> responsePostsFounded = postService.findByBodyWithQuery(bodyParamDecoded);
     return ResponseEntity.ok().body(responsePostsFounded);
   }
+
+  @GetMapping("/search-post-by-multiple-fields")
+  public ResponseEntity<List<Post>> searchPostsByMultipleFields(
+          @RequestParam(value = "textParam") String textParam,
+          @RequestParam(value = "minDateParam", defaultValue = "") String minDateParam,
+          @RequestParam(value = "maxDateParam", defaultValue = "") String maxDateParam) {
+    String textParamDecoded = URL.decodeParam(textParam);
+    Date minDate = URL.convertStringParamToDate(minDateParam, new Date(0L));
+    Date maxDate = URL.convertStringParamToDate(maxDateParam, new Date());
+    List<Post> responsePostsFounded = postService.findByMultipleFields(textParamDecoded, minDate, maxDate);
+    return ResponseEntity.ok().body(responsePostsFounded);
+  }
 }
+
+

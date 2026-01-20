@@ -1,0 +1,8 @@
+${AnsiColor.BRIGHT_GREEN}
+========================================
+        ${spring.application.name}
+========================================
+${AnsiColor.DEFAULT}
+App: ${spring.application.name}
+Version: ${application.version}
+Port: ${server.port}
